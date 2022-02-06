@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   constructor(private authService:AuthService,
               private formbuilder:FormBuilder,
               private router : Router) {  }
+
   ngOnInit(): void {
     this.registerForm = this.formbuilder.group({
       firstName :['',Validators.required],
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     console.table (this.registerForm.value);
-    this.authService.userLogin(this.registerForm);
+    // this.authService.userLogin(this.registerForm);
     alert("Success SignUp\n")
     this.router.navigate(['/login']);
   }
@@ -66,6 +67,26 @@ export class RegisterComponent implements OnInit {
 
   onClick(){
     this.router.navigate(['/login']);
+  }
+
+  // backend
+  userRegister(){
+    this.submitted=true;
+    if(this.registerForm.invalid){
+      return
+    }
+    this.authService.register(this.registerForm)
+    alert("Success");
+    console.log(this.registerForm.value)
+    this.router.navigate(['/login']);
+
+
+    // if(this.registerForm.valid){
+    //   this.authService.register(this.registerForm.value).subscribe(res=>{
+    //     this.registerForm.reset();
+    //     this.router.navigate(['/login']);
+    //   })
+    // }
   }
 
 

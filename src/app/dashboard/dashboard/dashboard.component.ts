@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,21 +16,38 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
 export class DashboardComponent implements OnInit,AfterViewInit  {
   
   displayedColumns: string[] = ['id', 'name', 'price', 
-  'cookTime','origin','Stars','Image-Url','Tags','edit','delete'];
+  'cookTime','origin','Stars','Tags','edit','delete'];
 
-  foods:Food[];
-  dataSource = new MatTableDataSource<Food>(this.foodService.getAll());
+
+  id:any;
+  // foods$:Observable<Food[]>;
+  // dataSource = new MatTableDataSource<any>(this.foodService.getAll());
+  // me trying
+  foods:any;
+  dataSource = new MatTableDataSource<Food[]>();
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private foodService:FoodService,
-              private _liveAnnouncer: LiveAnnouncer) { }
+              private _liveAnnouncer: LiveAnnouncer,
+              private route: ActivatedRoute,
+              private router:Router) { 
+                
+              }
   
   
 
   ngOnInit(): void {
-    this.foods=this.foodService.getAll()
+    // this.foods$=this.foodService.getAll()
+//     this.foodService.getAll().subscribe ( foods => {
+//       this.dataSource.data = foods;
+// })
+
+// my exp
+this.foods =this.foodService.getAll().subscribe ( foods => {
+        this.dataSource.data = foods;
+  })
     
   }
 
@@ -37,18 +56,24 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     this.dataSource.sort = this.sort;
   }
 
-  // announceSortChange(sortState: Sort) {
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
   
-  
-  
-  onDelete(id:number){
-    this.foodService.onDelete(id);
+  onDelete(id:any){
+    // this.id = this.route.snapshot.paramMap.get("id");
+    // console.log("this id is:"+this.id);
+    console.log("id is:"+id);
+    this.foodService.onDelete(id).subscribe(res=>{
+      console.log(res);
+      // window.location.reload();
+      this.router.navigateByUrl('/home')
+    });
+
   }
 
   applyFilter(event: Event) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { FoodService } from 'src/app/services/food/food.service';
 import { Cart } from 'src/app/shared/models/Cart';
@@ -44,9 +45,9 @@ export class CartPageComponent implements OnInit {
     transactionInfo:{
       totalPriceStatus:"FINAL",
       totalPriceLabel:"Total",
-      totalprice:"100.00",
-      currenyCode:"USD",
-      countryCode:"US"
+      totalprice: "CartItem.price.toString()",
+      currenyCode:"INR",
+      countryCode:"IN"
     }
   };
   onLoadPaymentData(event:any):void{
@@ -55,30 +56,38 @@ export class CartPageComponent implements OnInit {
   
 
   cart!:Cart;
+  // cart!:Observable<any>;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+    private foodService:FoodService) {
       
-    this.setCart();
+     this.setCart();
    }
 
   ngOnInit(): void {
+    // console.log("wfqtu")
+    // this.cart = this.cartService.getCart();
+    // this.cart = this.foodService.getAll();
+    
   }
 
   removeFromCart(cartItem:CartItem){
-    this.cartService.removeFromCart(cartItem.food.id);
+    console.log(cartItem._id);
+    // this.cartService.delete(cartItem._id)
+    this.cartService.removeFromCart(cartItem.food._id);
     this.setCart();
   }
+  
 
   changeQuantity(cartItem:CartItem, quantityInString:string){
     const quantity = parseInt(quantityInString);
-    this.cartService.changeQuantity(cartItem.food.id,quantity);
+    this.cartService.changeQuantity(cartItem.food._id,quantity);
     this.setCart();
   }
 
   setCart(){
-    this.cart= this.cartService.getCart();
+    this.cart = this.cartService.getCart();
   }
-
  
 
 }

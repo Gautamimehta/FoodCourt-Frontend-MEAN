@@ -3,7 +3,7 @@
     <h5 class="card-header text-center">Signup Form</h5>
 
     <div class="card-body">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" >
+      <form [formGroup]="registerForm" (ngSubmit)="userRegister()" >
         <div class="row">
           <div class="form-group col-6">
             <label>First Name</label>
@@ -108,7 +108,7 @@
         
         
         <div class="text-center">
-          <button class="btn btn-success btn-m px-3 mt-4 register">
+          <button class="btn btn-success btn-m px-3 mt-4 register" >
             Register
           </button>
           <button (click)="onReset" class="btn btn-success btn-m px-4 mt-4" type="reset">

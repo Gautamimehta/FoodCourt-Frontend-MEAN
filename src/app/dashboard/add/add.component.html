@@ -1,0 +1,144 @@
+<h2>Add New Food Item</h2>
+  <div class="container body " style="width: 50%; margin-top: 30px; margin-bottom: 70px;">
+    <div class="card bg-dark text-white m-3 mt-4">
+      
+  <div class="card-body">
+      <form [formGroup]="registerForm" (ngSubmit)="newListing()" >
+        <div class="row">
+          <div class="form-group col-6">
+            <label>Id</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            formControlName = "id"
+            [ngClass]="{ 'is-Invalid': submitted && h.id.errors }"
+            />
+            <div *ngIf="submitted && h.id.errors" class="text-warning">
+              <div *ngIf=" h.id.errors?.['required']">
+                Id is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-6">
+            <label>Food Name</label>
+            <input 
+            formControlName = "name"
+            [ngClass]="{ 'is-Invalid': submitted && h.name.errors }"
+            type="text" class="form-control" 
+            />
+            <div *ngIf="submitted && h.name.errors" class="text-warning">
+              <div *ngIf=" h.name.errors?.['required']">
+                 Food Name is required
+              </div>
+            </div>
+          </div>
+        </div> 
+  
+        <br>
+        
+        <div class="row">
+        <div class="form-group" class="col-6">
+          <label>Price</label>
+          <input
+          formControlName = "price"
+          [ngClass]="{ 'is-Invalid': submitted && h.price.errors }" 
+          type="text" class="form-control"
+          />
+          <div *ngIf="submitted && h.price.errors" class="text-warning">
+                 Valid Price is required  
+          </div>
+        </div>
+        <div class="form-group" class="col-6">
+          <label>Tags</label>
+          <input
+          formControlName = "tags"
+          [ngClass]="{ 'is-Invalid': submitted && h.tags.errors }" 
+          type="text" class="form-control" 
+          />
+          <div *ngIf="submitted && h.tags.errors" class="text-warning">
+            <div *ngIf=" h.tags.errors?.['required']"> </div>
+                Tags are required  
+          </div>
+        </div>
+      </div>
+           
+        <br>
+  
+        <div class="row">
+          <div class="form-group" class="col-6">
+            <label>Ratings</label>
+            <input 
+            formControlName = "stars"
+            [ngClass]="{ 'is-Invalid': submitted && h.stars.errors }"  
+            type="text" class="form-control" 
+            />
+            <div  *ngIf="submitted && h.stars.errors" class="text-warning">
+              <div *ngIf= " h.stars.errors?.['required']" >Rating is required</div>
+            </div>
+          </div>
+          <div class="form-group" class="col-6">
+            <label for="productPrice">Image Url</label>
+            <input 
+            formControlName = "imageUrl"
+            [ngClass]="{ 'is-Invalid': submitted && h.imageUrl.errors }"
+            (change)="onChange($event)"
+            type="file" name='imageUrl'
+            class="form-control"
+            accept="image/jpeg, image/png, image/jpg"
+            />
+            <div  *ngIf="submitted && h.imageUrl.errors" class="text-warning">
+            <div *ngIf= " h.imageUrl.errors?.['required']" >Image Url is required</div>
+              
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form-group" class="col-6">
+            <label>Origin</label>
+            <input 
+            formControlName = "origins"
+            [ngClass]="{ 'is-Invalid': submitted && h.origins.errors }"  
+            type="text" class="form-control"
+            />
+            <div  *ngIf="submitted && h.origins.errors" class="text-warning">
+              <div *ngIf= " h.origins.errors?.['required']" >Origin is required</div>
+            </div>
+          </div>
+          <div class="form-group" class="col-6">
+            <label>Cook Time</label>
+            <input 
+            formControlName = "cookTime"
+            [ngClass]="{ 'is-Invalid': submitted && h.cookTime.errors }"
+            type="text" class="form-control"
+            />
+            <div  *ngIf="submitted && h.cookTime.errors" class="text-warning">
+              <div *ngIf= " h.cookTime.errors?.['required']" >Cook Time is required</div>
+              
+            </div>
+          </div>
+        </div>
+       
+        <!-- for file
+        <div>
+          <input (change)="onFileSelect($event)" type="file" />
+        </div>
+        <div *ngIf="imageData">
+          <img [src]="imageData">
+        </div> -->
+        
+        
+        <div class="text-center">
+          <button class="btn btn-success btn-m px-3 mt-4 register">
+            Update
+          </button>
+          
+        </div>
+        <br>
+        
+       
+  
+      </form>
+    </div>
+    </div>
+    </div> 

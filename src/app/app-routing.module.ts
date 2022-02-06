@@ -16,7 +16,7 @@ const routes: Routes = [{
   path:'register',
   loadChildren:()=>
     import ('./register/register.module').then(_ =>  _.RegisterModule),
-    canActivate: [GuardsService]
+    // canActivate: [GuardsService]
 },
 {
   path:'dashboard',
@@ -40,7 +40,7 @@ const routes: Routes = [{
   path:'login',
   loadChildren:()=>
     import ('./login/login.module').then(_ =>  _.LoginModule),
-    canActivate: [GuardsService]
+    // canActivate: [GuardsService]
 }
 ];
 

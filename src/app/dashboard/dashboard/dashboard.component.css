@@ -2,7 +2,10 @@
 
 .tableContent{
     margin-bottom: 6vh;}
-
+.table2{
+    width:90%;
+    margin-left:70px;
+}
 h2{
     /* background-color: aqua; */
     text-align: center;

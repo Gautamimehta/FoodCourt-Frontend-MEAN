@@ -1,19 +1,22 @@
+
+
 <app-search></app-search>
-<app-not-found [visible]="!foods || foods.length<=0"
+<!-- <app-not-found [visible]="!foods || foods.length<=0"
 
 resetLinkText="Home Page">>
-</app-not-found>
-<ul>
+</app-not-found> -->
+<ul *ngIf = "foods$ | async as foods">
     <li *ngFor="let food of foods">
-        <a routerLink="/home/food-page/{{food.id}}">
+        
+            <!-- <a [routerLink]="food._id">View Details</a> -->
+        <a routerLink="/home/food-page/{{food._id}}">
+            <!-- <a routerLink="/home"> -->
             <img src="{{food.imageUrl}}" alt="">
             <div class="content">
                 <div class="name">
                     {{food.name}}
                 </div>
-                <!-- <span class="favourite {{food.favourite?'':'not'}} "
-                    ❤
-                </span> -->
+
                 <div class="stars">
                     <star-rating [value]="food.stars" 
                              [totalstars]="5"
@@ -40,6 +43,7 @@ resetLinkText="Home Page">>
                     {{food.price|currency:'INR'}}
                 </span>
             </div>
-        </a>      
+        </a>    
+      
     </li>
 </ul>

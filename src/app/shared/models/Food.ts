@@ -1,9 +1,9 @@
-export class Food{
-    id:number;
+export interface Food{
+    _id:any;
     name:string;
     price:number;
     tags:string[];
-    stars:number=0;
+    stars:number;
     imageUrl:string;
     origins:string[];
     cookTime:string;

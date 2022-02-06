@@ -10,7 +10,7 @@ resetLinkText="Got To HomePage">
                 <img [src]="cartItem.food.imageUrl" alt="cartItem.food.name">
             </div>
             <div>
-                <a routerLink="/home/food-page/{{cartItem.food.id}}">
+                <a routerLink="/home/food-page/{{cartItem.food._id}}">
                     {{cartItem.food.name}}
                 </a>
             </div>

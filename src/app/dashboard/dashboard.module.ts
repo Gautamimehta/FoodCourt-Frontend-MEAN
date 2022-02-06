@@ -8,11 +8,13 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {  MatInputModule} from '@angular/material/input';
+import { AddComponent } from './add/add.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     EditComponent,
+    AddComponent,
     
   ],
   imports: [

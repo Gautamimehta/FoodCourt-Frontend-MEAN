@@ -8,7 +8,7 @@
         <h3 class="card-header text-center text-white heading"> Log-In  </h3>
     
         <div class="card-body ">
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form formq">
+          <form [formGroup]="loginForm" (ngSubmit)="userLogin()" class="form formq">
     
             <div class="form-group" class="col-12">
               <label>Email</label>
@@ -39,7 +39,7 @@
               </div>
     
             <div class="text-center">
-              <button class="login" (click)="onSubmit()"class="btn text-white btn-m px-3 mt-4 register">
+              <button class="login" class="btn text-white btn-m px-3 mt-4 register">
                 Log In
               </button>
             </div>

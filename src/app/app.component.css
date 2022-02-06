@@ -6,22 +6,42 @@ img{
 }
 
 .itemlogout{
-    margin-left: 960px;
+    margin-left: 50px;
     outline: none;
     border-width: 0em;
     color: white;
     border-radius: 10%;
-    /* background-color:red; */
     
 }
 .itemlog{
   color: red;
 }
 .login{
-    margin-left: 1300px;
+    margin-left: 1200px;
 }
 .register{
     margin-left: 4px;
+}
+.itemh{
+  
+  margin-right: 2px;
+  padding-top: 3px;
+  font-size:18px;
+  color: #aaa
+}
+
+.cart{
+  /* background-color: aqua; */
+  margin-left: -3px;
+  
+}
+.carticon{
+ 
+  font-size: 20px;
+    height: 10px;
+    margin-left: 900px;
+    margin-top: 12px;
+
 }
 
 /* css animation */

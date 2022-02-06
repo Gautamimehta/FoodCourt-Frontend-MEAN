@@ -6,11 +6,14 @@ import { CanActivate} from '@angular/router';
 })
 export class RoleGuard implements CanActivate {
   canActivate(){
-    let Role = localStorage.getItem("user_type");
-    if(Role==="admin"){
+    let Role = localStorage.getItem("User");
+    if(Role=="admin"){
+      console.log(Role);
       return true;
+
     }
     alert("You dont have admin rights")
+    console.log(Role);
     return false;
   }
   

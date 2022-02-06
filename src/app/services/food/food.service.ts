@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Food } from 'src/app/shared/models/food';
 
 @Injectable({
@@ -7,9 +8,19 @@ import { Food } from 'src/app/shared/models/food';
 })
 export class FoodService {
 
+  private ROOT_URL = "http://localhost:4000/api/listings";
+
+  // http options backend
+  private httpOptions = {
+    headers: new HttpHeaders()
+      .set("Content-Type", "application/json")
+      .set("auth-token", localStorage.getItem("token")as string)
+  };
+
+
   foods: Food[]=[
     {
-      id: 1,
+      _id:1,
       name: 'Momos',
       cookTime: '10-20',
       price: 80,
@@ -19,7 +30,7 @@ export class FoodService {
       tags: ['FastFood'],
       },
     {
-      id: 2,
+      _id:2,
       name: 'Fish',
       price: 200,
       cookTime: '20-30',
@@ -28,7 +39,7 @@ export class FoodService {
       imageUrl: '/assets/images/food/food-9.jpg',
       tags: ['Dinner', 'Lunch'],},
     {
-      id: 3,
+      _id:13,
       name: 'Veg Roll',
       price: 5,
       cookTime: '10-15',
@@ -38,7 +49,7 @@ export class FoodService {
       tags: ['FastFood', 'Lunch', 'Dinner'],
     },
     {
-      id: 4,
+      _id:4,
       name: 'Burger',
       price: 60,
       cookTime: '10-25',
@@ -48,7 +59,7 @@ export class FoodService {
       tags: ['FastFood', 'Fry'],
     },
     {
-      id: 5,
+      _id:5,
       name: 'Chicken Soup',
       price: 150,
       cookTime: '40-50',
@@ -58,7 +69,7 @@ export class FoodService {
       tags: ['SlowFood', 'Soup'],
     },
     {
-      id: 6,
+      _id:6,
       name: 'Vegetables Pizza',
       price: 150,
       cookTime: '40-50',
@@ -68,7 +79,7 @@ export class FoodService {
       tags: ['FastFood', 'Pizza', 'Lunch'],
     },
     {
-      id: 7,
+      _id:7,
       name: 'Dhokla',
       price: 90,
       cookTime: '15-20',
@@ -77,7 +88,7 @@ export class FoodService {
       imageUrl: '/assets/images/food/food-7.png',
       tags: ['Snacks'],
     },{
-      id: 8,
+      _id:8,
       name: 'Pizza Pepperoni',
       cookTime: '10-20',
       price: 100,
@@ -87,7 +98,7 @@ export class FoodService {
       tags: ['FastFood', 'Pizza', 'Lunch'],
     },
     {
-      id: 9,
+      _id:9,
       name: 'Meatball',
       price: 70,
       cookTime: '20-30',
@@ -97,7 +108,7 @@ export class FoodService {
       tags: ['FastFood', 'Lunch'],
     },
     {
-      id: 10,
+      _id:10,
       name: 'Hamburger',
       price: 50,
       cookTime: '10-15',
@@ -107,7 +118,7 @@ export class FoodService {
       tags: ['FastFood', 'Hamburger']
     },
     {
-      id: 11,
+      _id:11,
       name: 'Non veg Thali',
       price: 250,
       cookTime: '10-15',
@@ -117,7 +128,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'Thali']
     },
     {
-      id: 12,
+      _id:12,
       name: 'South Thali Thali',
       price: 150,
       cookTime: '10-15',
@@ -127,7 +138,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'Thali']
     },
     {
-      id: 13,
+      _id:13,
       name: 'Cauliflower',
       price: 100,
       cookTime: '10-15',
@@ -137,7 +148,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'FastFood']
     },
     {
-      id: 14,
+      _id:14,
       name: 'Pasta',
       price: 150,
       cookTime: '10-15',
@@ -147,7 +158,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'FastFood']
     },
     {
-      id: 15,
+      _id:15,
       name: 'Chicken',
       price: 150,
       cookTime: '10-15',
@@ -157,7 +168,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'FastFood']
     },
     {
-      id: 16,
+      _id:16,
       name: 'Pizza',
       price: 150,
       cookTime: '10-15',
@@ -167,7 +178,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner', 'FastFood']
     },
     {
-      id: 17,
+      _id:17,
       name: 'Fried Potatoes',
       price: 60,
       cookTime: '15-20',
@@ -177,7 +188,7 @@ export class FoodService {
       tags: ['FastFood', 'Fry'],
     },
     {
-      id: 18,
+      _id:18,
       name: 'Fried Rice',
       price: 150,
       cookTime: '15-20',
@@ -187,7 +198,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner'],
     },
     {
-      id: 19,
+      _id:19,
       name: 'Paratha',
       price: 70,
       cookTime: '15-20',
@@ -197,7 +208,7 @@ export class FoodService {
       tags: ['Lunch', 'Dinner'],
     },
     {
-      id: 20,
+      _id:20,
       name: 'Dal Roti',
       price: 70,
       cookTime: '15-20',
@@ -210,31 +221,63 @@ export class FoodService {
 
   constructor(private httpClient : HttpClient) { }
 
-  getFoodById(id:number):Food{
-    return this.getAll().find(food=>food.id==id)!;
-  }
+  getFoodById(id:any):any{
+    //  frontend
+    // return this.getAll().find(food=>food.id==id)!;
 
-  getAll():Food[]{
+    // backend
+
+    return this.httpClient.get<Food>(`${this.ROOT_URL}/${id}`);
+  }
+ 
+  getAl(){
+    // only frontend se
     return this.foods;
+
+    
+  }
+  getAll(){
+    // only frontend se
+    // return this.foods;
+
+    // backend se
+    return this.httpClient.get<any>(this.ROOT_URL)
   }
 
-  onGetFood(id:number):any{
-    return this.foods.find(x=>x.id==id);
-  }
+  // onGetFood(id:number):any{
+  //   console.log(this.httpClient.put<any>(`${this.ROOT_URL}/${id}`,this.httpOptions));
+  //   return this.httpClient.put<any>(`${this.ROOT_URL}/${id}`,this.httpOptions);
+  // }
   
-  onAdd(food:Food){
-    this.foods.push(food)
+  
+  onAdd(food:any){
+    // frontend
+    // this.foods.push(food)
+
+    // backend
+    return this.httpClient.post<any>(this.ROOT_URL,food,this.httpOptions)
   }
 
-  onDelete(id:number){
-    let food = this.foods.find(x=>x.id===id);
-    let index = this.foods.findIndex(x=>x.id===id);
-    this.foods.splice(index,1);
+  onEdit(food:any,id:any){
+    // return this.httpClient.put<any>(`${this.ROOT_URL}/${id}`,food,this.httpOptions)
+    return this.httpClient.put<any>(`${this.ROOT_URL}/${id}`,food,this.httpOptions);
+
   }
 
-  onUpdate(food:Food){
-    let oldFood :any = this.foods.find(x=>x.id==food.id);
-    oldFood.id = food.id;
+  onDelete(id: string) {
+    return this.httpClient.delete(`${this.ROOT_URL}/${id}`, this.httpOptions);
+  }
+  // onDelete(id:number){ 
+  //   // let food = this.foods.find(x=>x.id===id);
+  //   // let index = this.foods.findIndex(x=>x.id===id);
+  //   // // console.log(index);
+  //   // this.foods.splice(index,1);
+  //    console.log("index");
+  // }
+
+  onUpdate(food:Food,id:any){
+    let oldFood:any = this.httpClient.put<any>(`${this.ROOT_URL}/${id}`,food,this.httpOptions)
+    oldFood.id = food._id;
     oldFood.name = food.name;
     oldFood.price = food.price;
     oldFood.cookTime = food.cookTime;
@@ -244,3 +287,5 @@ export class FoodService {
     oldFood.tags = food.tags;
   }
 }
+
+
