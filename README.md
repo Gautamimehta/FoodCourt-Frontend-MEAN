@@ -26,10 +26,16 @@ Food Court is an Online Food Website that enables the users to have access to th
 * update edit and delete option is also available.
  
 ## Installation and Use
-#### Clone the Respository
+#### Clone the Respository for frontend and backend
 ```sh
-git clone https://github.com/Gautamimehta/FoodCourt-MEAN.git
+https://github.com/Gautamimehta/FoodCourt-Frontend-MEAN.git
 ```
+
+```sh
+git clone https://github.com/Gautamimehta/FoodCourt-Backend-MEAN.git
+```
+
+
 
 ```SH
 cd client 
